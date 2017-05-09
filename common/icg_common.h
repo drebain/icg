@@ -40,13 +40,6 @@
     typedef Eigen::Matrix3f mat3;
 #endif
 
-#if defined(WITH_EIGEN) && defined(WITH_OPENGL)
-    #include <OpenGP/GL/EigenOpenGLSupport3.h>
-    /// We use a modified (to support OpenGL3) version of the Eigen OpenGL module 
-    /// @see http://eigen.tuxfamily.org/dox/unsupported/group__OpenGLSUpport__Module.html
-    // #include <Eigen/OpenGL3Support>
-#endif
-
 ///--- Shader compiling utilities
 #if defined(WITH_OPENGL) && defined(WITH_OPENGP)
     #include "OpenGP/GL/shader_helpers.h"
