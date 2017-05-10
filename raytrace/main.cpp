@@ -24,18 +24,47 @@ struct MyImage{
         return image.at<cv::Vec3b>(cv::Point(col, row));
     }
 
-    /// Displays the image and pauses program execution (until key pressed)
-    void show(){
-        /// Display the image
-        cv::imshow("image", image);
-        cv::waitKey(0);
-    }
-
-    /// Use files with "*.png" extension
-    void save(const std::string& filename){
-        cv::imwrite(filename, image);
-    }
 };
+
+void write_bitmap(std::string name,MyImage &image) {
+
+    FILE *f;
+    unsigned char *img = image.image.data;
+
+    int w = image.cols;
+    int h = image.rows;
+
+    int filesize = 54 + 3*w*h;
+
+    unsigned char bmpfileheader[14] = {'B','M', 0,0,0,0, 0,0, 0,0, 54,0,0,0};
+    unsigned char bmpinfoheader[40] = {40,0,0,0, 0,0,0,0, 0,0,0,0, 1,0, 24,0};
+    unsigned char bmppad[3] = {0,0,0};
+
+    bmpfileheader[ 2] = (unsigned char)(filesize    );
+    bmpfileheader[ 3] = (unsigned char)(filesize>> 8);
+    bmpfileheader[ 4] = (unsigned char)(filesize>>16);
+    bmpfileheader[ 5] = (unsigned char)(filesize>>24);
+
+    bmpinfoheader[ 4] = (unsigned char)(       w    );
+    bmpinfoheader[ 5] = (unsigned char)(       w>> 8);
+    bmpinfoheader[ 6] = (unsigned char)(       w>>16);
+    bmpinfoheader[ 7] = (unsigned char)(       w>>24);
+    bmpinfoheader[ 8] = (unsigned char)(       h    );
+    bmpinfoheader[ 9] = (unsigned char)(       h>> 8);
+    bmpinfoheader[10] = (unsigned char)(       h>>16);
+    bmpinfoheader[11] = (unsigned char)(       h>>24);
+
+    f = fopen(name.c_str(),"wb");
+    fwrite(bmpfileheader,1,14,f);
+    fwrite(bmpinfoheader,1,40,f);
+    for(int i=0; i<h; i++)
+    {
+        fwrite(img+(w*(h-i-1)*3),3,w,f);
+        fwrite(bmppad,1,(4-(w*3)%4)%4,f);
+    }
+    fclose(f);
+
+}
 
 
 int main(int, char**){
@@ -58,11 +87,11 @@ int main(int, char**){
             if(row>100 && row<200 && col>200 && col<500) 
                 image(row,col) = red();
             if(row>140 && row<240 && col>240 && col<340) 
-                image(row,col) = Colour(0,0,255);
+                image(row,col) = Colour(0,0,127);
        }
     }
     
-    image.show();
+    write_bitmap("out.bmp",image);
 
     return EXIT_SUCCESS;
 }
