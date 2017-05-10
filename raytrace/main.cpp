@@ -28,6 +28,8 @@ struct MyImage{
 
 void write_bitmap(std::string name,MyImage &image) {
 
+    /// http://stackoverflow.com/a/2654860
+
     FILE *f;
     unsigned char *img = image.image.data;
 
