@@ -6,7 +6,7 @@
 #endif
 
 typedef cv::Vec3b Colour;
-Colour red() { return Colour(255, 0, 0); }
+Colour blue() { return Colour(255, 0, 0); }
 Colour white() { return Colour(255, 255, 255); }
 Colour black() { return Colour(0, 0, 0); }
 
@@ -80,20 +80,28 @@ int main(int, char**){
 
     for (int row = 0; row < image.rows; ++row) {
         for (int col = 0; col < image.cols; ++col) {
-            /// TODO: build primary rays
+
+            /// TODO: build primary rays that correspond to each pixel
+
             // vec3 o = vec3(0,0,0);
-            // vec3 d = vec3(1,1,0).normalized();
-            // ray3 r(o,d);
+            // vec3 d = ?
             
-            /// EXAMPLE: using "image(row,col)"
-            if(row>100 && row<200 && col>200 && col<500) 
-                image(row,col) = red();
-            if(row>140 && row<240 && col>240 && col<340) 
+            /// EXAMPLE: using "image(row,col) to set pixel values"
+            if(row>100 && row<200 && col>200 && col<500)  {
+
+                image(row,col) = blue();
+
+            }
+
+            if(row>140 && row<240 && col>240 && col<340) {
+
                 image(row,col) = Colour(0,0,127);
+
+            }
        }
     }
     
-    write_bitmap("out.bmp",image);
+    write_bitmap("../../out.bmp",image);
 
     return EXIT_SUCCESS;
 }
