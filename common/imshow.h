@@ -114,7 +114,12 @@ public:
     }
 
     void show() {
+
         glfwInit();
+
+        //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+        //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
         auto window = glfwCreateWindow(cols, rows, "Output Image", nullptr, nullptr);
 
@@ -122,6 +127,8 @@ public:
 
         glewExperimental = GL_TRUE;
         glewInit();
+
+        std::cout << "TEST2" << std::endl;
 /*
         /// Create the Vertex Shader
         GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
