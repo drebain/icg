@@ -53,18 +53,12 @@
 
 ///--- For mesh I/O we use OpenGP
 #ifdef WITH_OPENGP
-    #include <OpenGP/Surface_mesh.h>
-    using namespace opengp; ///< yes, pollution :)
+    #include <OpenGP/SurfaceMesh/SurfaceMesh.h>
 #endif
 
 ///--- GL Error checking
 #ifdef WITH_OPENGL
     #include "check_error_gl.h"
-#endif
-
-#ifdef WITH_OPENCV
-    #include "opencv2/core/core.hpp"       ///< cv::Mat
-    #include "opencv2/highgui/highgui.hpp" ///< cv::imShow
 #endif
 
 ///--- These namespaces assumed by default
