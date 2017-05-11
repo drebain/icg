@@ -1,6 +1,0 @@
-/Users/drebain/Workspace/icg-2017/build/CMakeFiles/edit_cache.dir
-/Users/drebain/Workspace/icg-2017/build/CMakeFiles/rebuild_cache.dir
-/Users/drebain/Workspace/icg-2017/build/CMakeFiles/common_headers.dir
-/Users/drebain/Workspace/icg-2017/build/raytrace/CMakeFiles/edit_cache.dir
-/Users/drebain/Workspace/icg-2017/build/raytrace/CMakeFiles/rebuild_cache.dir
-/Users/drebain/Workspace/icg-2017/build/raytrace/CMakeFiles/raytrace.dir
