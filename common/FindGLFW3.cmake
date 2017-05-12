@@ -28,7 +28,8 @@ FIND_PATH( GLFW3_INCLUDE_DIRS GLFW/glfw3.h
     /usr/include/X11
     /usr/include
     /opt/X11/include
-    /opt/include )
+    /opt/include
+    ${CMAKE_SOURCE_DIR}/external/glfw/include)
 
 FIND_LIBRARY( GLFW3_LIBRARIES NAMES glfw3 glfw PATHS
     $ENV{GLFWDIR}/lib
@@ -42,7 +43,8 @@ FIND_LIBRARY( GLFW3_LIBRARIES NAMES glfw3 glfw PATHS
     /usr/lib
     /usr/lib/x86_64-linux-gnu/
     /opt/X11/lib
-    /opt/lib )
+    /opt/lib
+    ${CMAKE_SOURCE_DIR}/external/glfw/lib/x64)
 
 SET(GLFW3_FOUND "NO")
 IF(GLFW3_LIBRARIES AND GLFW3_INCLUDE_DIRS)
