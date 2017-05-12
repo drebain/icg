@@ -21,24 +21,25 @@ int main(int, char**){
     
     /// TODO: define camera position and sphere position here
 
+    // example: vec3 spherePos = vec3(0, 5, 0);
+
     for (int row = 0; row < image.rows; ++row) {
         for (int col = 0; col < image.cols; ++col) {
+
             /// TODO: build primary rays
-            // vec3 o = vec3(0,0,0);
-            // vec3 d = vec3(1,1,0).normalized();
-            // ray3 r(o,d);
+
+            // example: vec3 o = vec3(0,0,0);
             
-            /// EXAMPLE: using "image(row,col)"
-            if(row>100 && row<200 && col>200 && col<500)  {
+            /// EXAMPLE: using "image.set(row, col, colour)" to set pixel values
+            if(row > 0 && row < 200 && col > 0 && col < 200)  {
                 image.set(row, col, red());
-            }
-            if(row>140 && row<240 && col>240 && col<340) {
-                image.set(row, col, Colour(0,0,127));
+            } else {
+                image.set(row, col, black());
             }
        }
     }
 
-    image.save("out.bmp");
+    image.save("../../out.bmp");
     image.show();
 
     return EXIT_SUCCESS;
