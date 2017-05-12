@@ -115,18 +115,8 @@ public:
 
     void show() {
 
-        glfwInit();
-
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-        auto window = glfwCreateWindow(cols, rows, "Output Image", nullptr, nullptr);
-
-        glfwMakeContextCurrent(window);
-
-        glewExperimental = GL_TRUE;
-        glewInit();
+        OpenGP::glfwInitWindowSize(cols,rows);
+        OpenGP::glfwMakeWindow("Output Image");
 
         program = OpenGP::compile_shaders(vshader_source, fshader_source);
 
@@ -142,7 +132,7 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         GLint tex_id = glGetUniformLocation(program, "tex");
-        glUniform1i(tex_id, GL_TEXTURE0);
+        glUniform1i(tex_id, 0);
 
         /// Vertex Data
         GLuint _vao, _vbo_vpoint, _vbo_vtexcoord;
@@ -186,23 +176,24 @@ public:
             glVertexAttribPointer(vtexcoord_id, 2, GL_FLOAT, DONT_NORMALIZE, ZERO_STRIDE, ZERO_BUFFER_OFFSET);
         }
 
-        while (!glfwWindowShouldClose(window)) {
+        OpenGP::glfwDisplayFunc(&display);
 
-            glClearColor(0.0,0.0,0.0,0.0);
-            glClear(GL_COLOR_BUFFER_BIT);
+        glBindVertexArray(_vao);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, gpuTex);
+        glUseProgram(program);
 
-            glBindVertexArray(_vao);
-            glUseProgram(program);
+        OpenGP::glfwMainLoop();
 
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, gpuTex);
+    }
 
-            ///--- Draw
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    private: static void display() {
 
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-        }
+        glClearColor(0.0,0.0,0.0,0.0);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        ///--- Draw
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     }
 

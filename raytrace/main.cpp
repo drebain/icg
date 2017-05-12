@@ -31,7 +31,7 @@ int main(int, char**){
             // example: vec3 o = vec3(0,0,0);
             
             /// EXAMPLE: using "image.set(row, col, colour)" to set pixel values
-            if(row > 0 && row < 200 && col > 0 && col < 200)  {
+            if (row > 0 && row < 200 && col > 0 && col < 200)  {
                 image.set(row, col, red());
             } else {
                 image.set(row, col, black());
