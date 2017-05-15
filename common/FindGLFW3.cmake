@@ -19,6 +19,20 @@
 # - https://raw.github.com/progschj/OpenGL-Examples/master/cmake_modules/FindGLFW.cmake
 # 
 
+IF(WIN32)
+    IF(MSVC)
+        IF(MSVC_VERSION EQUAL 1910)
+            SET(GLFW_WINLIB "lib-vc2015")
+        ELSE(MSVC_VERSION EQUAL 1910)
+            SET(GLFW_WINLIB "lib-vc2012")
+        ENDIF(MSVC_VERSION EQUAL 1910)
+    ELSEIF(MINGW)
+        SET(GLFW_WINLIB "lib-mingw-w64")
+    ELSE(MSVC)
+        message(ERROR "Unsupported Compiler")
+    ENDIF(MSVC)
+ENDIF(WIN32)
+
 FIND_PATH( GLFW3_INCLUDE_DIRS GLFW/glfw3.h
     $ENV{GLFWDIR}/include
     /usr/local/include
@@ -44,7 +58,7 @@ FIND_LIBRARY( GLFW3_LIBRARIES NAMES glfw3 glfw PATHS
     /usr/lib/x86_64-linux-gnu/
     /opt/X11/lib
     /opt/lib
-    ${CMAKE_SOURCE_DIR}/external/glfw/lib/x64)
+    ${CMAKE_SOURCE_DIR}/external/glfw/${GLFW_WINLIB})
 
 SET(GLFW3_FOUND "NO")
 IF(GLFW3_LIBRARIES AND GLFW3_INCLUDE_DIRS)
