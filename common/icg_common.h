@@ -44,7 +44,7 @@
 
 ///--- GL Error checking
 #ifdef WITH_OPENGL
-    #include "check_error_gl.h"
+    #include "OpenGP/GL/check_error_gl.h"
 #endif
 
 ///--- These namespaces assumed by default

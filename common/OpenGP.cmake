@@ -1,7 +1,7 @@
 #--- OPENGP
 find_package(OpenGP REQUIRED)
 include_directories(${OpenGP_INCLUDE_DIRS})
-add_definitions(-DHEADERONLY)
+add_definitions(-DOPENGP_HEADERONLY)
 add_definitions(-DUSE_EIGEN)
 if(NOT OpenGP_FOUND)
     message(ERROR "OPENGP not found!")

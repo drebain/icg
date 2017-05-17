@@ -32,7 +32,7 @@ elseif(UNIX)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
     else()
         # Clang in OSX supports partially c++11 through extensions
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++11-extensions")        
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++11-extensions")
     endif()
 elseif(WIN32)    
     # MSVC12 supports c++11 natively

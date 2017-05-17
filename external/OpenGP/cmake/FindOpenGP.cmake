@@ -12,21 +12,18 @@
 # DEBUG: outputs given environment variable
 # message(STATUS OpenGPDIR $ENV{OpenGP_DIR})
 
-#find_path(OpenGP_INCLUDE_DIR OpenGP/SurfaceMesh/SurfaceMesh.h
-#    # Check build tree
-#    ./src
-#    ../src
-#    ../../src
-#    ../../../src
-#    # Check environment
-#    $ENV{OpenGP_DIR}
-#    # check system folders
-#    /usr/local/include
-#    /usr/include
-#    /opt/include)
-
-set(OpenGP_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/../external/OpenGP/src/)
-set(OpenGP_INCLUDE_DIRS ${CMAKE_CURRENT_LIST_DIR}/../external/OpenGP/src/)
+find_path(OpenGP_INCLUDE_DIR OpenGP/SurfaceMesh/SurfaceMesh.h
+    # Check build tree
+    ./src
+    ../src
+    ../../src
+    ../../../src
+    # Check environment
+    $ENV{OpenGP_DIR}
+    # check system folders
+    /usr/local/include
+    /usr/include
+    /opt/include)
 
 #--- Found?
 if(OpenGP_INCLUDE_DIR)

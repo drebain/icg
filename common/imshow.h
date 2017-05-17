@@ -37,6 +37,7 @@ public:
     int rows, cols;
 
     std::unique_ptr<uint8_t[]> data;
+    std::unique_ptr<float[]> depth;
 
     Image(int cols, int rows) {
 
@@ -44,6 +45,7 @@ public:
         this->cols = cols;
 
         data = std::unique_ptr<uint8_t[]>(new uint8_t[3 * cols * rows]);
+        depth = std::unique_ptr<float[]>(new float[cols * rows]);
 
     }
 
@@ -60,6 +62,15 @@ public:
 
     }
 
+    float getDepth(int row, int col) {
+
+        assert(row >= 0 && row < rows);
+        assert(col >= 0 && col < cols);
+
+        return depth[row * cols + col];
+
+    }
+
     void set(int row, int col, Colour colour) {
 
         assert(row >= 0 && row < rows);
@@ -68,6 +79,15 @@ public:
         data[3 * (row * cols + col)]     = colour(2);
         data[3 * (row * cols + col) + 1] = colour(1);
         data[3 * (row * cols + col) + 2] = colour(0);
+
+    }
+
+    void setDepth(int row, int col, float val) {
+
+        assert(row >= 0 && row < rows);
+        assert(col >= 0 && col < cols);
+
+        depth[row * cols + col] = val;
 
     }
 
