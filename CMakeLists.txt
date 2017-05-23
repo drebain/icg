@@ -12,5 +12,7 @@ include(common/GLEW.cmake)
 include(common/GLFW.cmake)
 
 #--- Subprojects
+#add_subdirectory(raytrace)
 add_subdirectory(rasterize)
+add_subdirectory(assignment2)
 

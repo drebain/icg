@@ -27,13 +27,7 @@ if(EXISTS "/usr/bin/icc")
     set(CMAKE_CXX_COMPILER "/usr/bin/icc")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 elseif(UNIX)
-    if(NOT APPLE)
-        # Enable c++11 for GCC 
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    else()
-        # Clang in OSX supports partially c++11 through extensions
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++11-extensions")
-    endif()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 elseif(WIN32)    
     # MSVC12 supports c++11 natively
 endif()
