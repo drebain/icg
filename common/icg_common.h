@@ -47,5 +47,10 @@
     #include "OpenGP/GL/check_error_gl.h"
 #endif
 
+///--- glfw
+#if defined(WITH_GLFW)
+    #include <GLFW/glfw3.h>
+#endif
+
 ///--- These namespaces assumed by default
 using namespace std;
