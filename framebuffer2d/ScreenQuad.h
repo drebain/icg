@@ -11,7 +11,7 @@ public:
     void init(GLuint texture){ 
         
         ///--- Compile the shaders
-        _pid = OpenGP::load_shaders("_screenquad/ScreenQuad_vshader.glsl", "_screenquad/ScreenQuad_fshader.glsl");
+        _pid = OpenGP::load_shaders("ScreenQuad_vshader.glsl", "ScreenQuad_fshader.glsl");
         if(!_pid) exit(EXIT_FAILURE);       
         glUseProgram(_pid);
         
