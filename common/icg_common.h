@@ -52,5 +52,7 @@
     #include <GLFW/glfw3.h>
 #endif
 
+#include "picoPNG.h"
+
 ///--- These namespaces assumed by default
 using namespace std;

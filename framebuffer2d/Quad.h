@@ -60,8 +60,13 @@ public:
             glGenTextures(1, &_tex);
             glBindTexture(GL_TEXTURE_2D, _tex);
 
-            OpenGP::EigenImage<vec3> image;
-            OpenGP::imread(texture_filename, image);
+            std::vector<unsigned char> buffer, image;
+            loadFile(buffer, texture_filename);
+            unsigned long w, h;
+            decodePNG(image, w, h, buffer.empty() ? 0 : &buffer[0], (unsigned long)buffer.size());
+
+            //OpenGP::EigenImage<vec3> image;
+            //OpenGP::imread(texture_filename, image);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -69,7 +74,7 @@ public:
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
             glTexImage2D(GL_TEXTURE_2D, /*level*/ 0, GL_RGB32F,
-                         image.cols(), image.rows(), 0,
+                         w, h, 0,
                          GL_RGB, GL_FLOAT, image.data());
 
             GLuint tex_id = glGetUniformLocation(_pid, "tex");
