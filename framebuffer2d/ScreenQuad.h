@@ -59,7 +59,8 @@ public:
         GLuint tex_id = glGetUniformLocation(_pid, "tex");
         glUniform1i(tex_id, 0 /*GL_TEXTURE0*/);
     
-        
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
         ///--- to avoid the current object being polluted
         glBindVertexArray(0);
         glUseProgram(0);
@@ -79,5 +80,8 @@ public:
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _tex);
+
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
     }
 };
