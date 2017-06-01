@@ -73,9 +73,9 @@ public:
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-            glTexImage2D(GL_TEXTURE_2D, /*level*/ 0, GL_RGB32F,
+            glTexImage2D(GL_TEXTURE_2D, /*level*/ 0, GL_RGBA8,
                          w, h, 0,
-                         GL_RGB, GL_FLOAT, image.data());
+                         GL_RGBA, GL_UNSIGNED_BYTE, image.data());
 
             GLuint tex_id = glGetUniformLocation(_pid, "tex");
             glUniform1i(tex_id, 0 /*GL_TEXTURE0*/);
