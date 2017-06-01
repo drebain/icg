@@ -59,17 +59,19 @@ public:
         glGenTextures(1, &_tex);
         glBindTexture(GL_TEXTURE_2D, _tex);
 
-        OpenGP::EigenImage<vec3> image;
-        OpenGP::imread("Quad/mrt.tga", image);
+        std::vector<unsigned char> buffer, image;
+        loadFile(buffer, "Quad/mrt.png");
+        unsigned long w, h;
+        decodePNG(image, w, h, buffer.empty() ? 0 : &buffer[0], (unsigned long)buffer.size());
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-        glTexImage2D(GL_TEXTURE_2D, /*level*/ 0, GL_RGB32F,
-                     image.cols(), image.rows(), 0,
-                     GL_RGB, GL_FLOAT, image.data());
+        glTexImage2D(GL_TEXTURE_2D, /*level*/ 0, GL_RGBA8,
+                     w, h, 0,
+                     GL_RGBA, GL_UNSIGNED_BYTE, image.data());
 
         GLuint tex_id = glGetUniformLocation(_pid, "tex");
         glUniform1i(tex_id, 0 /*GL_TEXTURE0*/);
