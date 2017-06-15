@@ -16,6 +16,6 @@ void main() {
 
     float displacement = 0.0f; // <<<<< TODO
     fnormal_cam = inverse( transpose( mat3(VIEW * MODEL) )) * vnormal; 
-    vec4 world = MODEL * vec4(vpoint + displacement, 1.0);
+    vec4 world = MODEL * vec4(vpoint + vec3(0, displacement, 0), 1.0);
     gl_Position = PROJ * VIEW * world;
 }
