@@ -4,6 +4,8 @@ in vec3 fnormal_cam;
 
 in vec2 uv;
 
+uniform sampler2D tex;
+
 vec3 R = vec3(1,0,0);
 vec3 G = vec3(0,1,0);
 vec3 B = vec3(0,0,1);

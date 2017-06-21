@@ -10,11 +10,13 @@ uniform mat4 MODEL;
 uniform mat4 VIEW;
 uniform mat4 PROJ;
 
+uniform sampler2D tex;
+
 
 void main() {          
      uv = (vpoint.xz + vec2(1.0f,1.0f)) / 2.0f;
 
-    float displacement = 0.0f; // <<<<< TODO
+    float displacement = texture(tex, uv).r;
     fnormal_cam = inverse( transpose( mat3(VIEW * MODEL) )) * vnormal; 
     vec4 world = MODEL * vec4(vpoint + vec3(0, displacement, 0), 1.0);
     gl_Position = PROJ * VIEW * world;
