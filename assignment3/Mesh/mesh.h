@@ -1,12 +1,14 @@
 #pragma once
 #include "icg_common.h"
+#include "OpenGP/Eigen/Image.h"
 #include "../noise.h"
 
 class Mesh{
 protected:
     GLuint _vao; ///< vertex array object
     GLuint _pid; ///< GLSL shader program ID
-    GLuint _tex;
+    GLuint _height_tex;
+    GLuint _diffuse_tex;
 
     const std::string filename = "Mesh/grid.obj";
     OpenGP::SurfaceMesh mesh;
@@ -65,11 +67,33 @@ public:
 
         glUseProgram(_pid);
 
-        _tex = generate_noise();
+        _height_tex = generate_noise();
 
-        GLuint tex_id = glGetUniformLocation(_pid, "tex");
+        GLuint tex_id = glGetUniformLocation(_pid, "height_map");
         check_error_gl();
         glUniform1i(tex_id, 0);
+        check_error_gl();
+
+        OpenGP::EigenImage<vec3> image;
+        OpenGP::imread("grass.tga", image);
+
+        glGenTextures(1, &_diffuse_tex);
+        glBindTexture(GL_TEXTURE_2D, _diffuse_tex);
+
+        check_error_gl();
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_WRAP_BORDER);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_WRAP_BORDER);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        check_error_gl();
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F,
+                     image.cols(), image.rows(), 0,
+                     GL_RGB, GL_FLOAT, image.data());
+        check_error_gl();
+
+        tex_id = glGetUniformLocation(_pid, "diffuse_map");
+        check_error_gl();
+        glUniform1i(tex_id, 1);
         check_error_gl();
 
         glUseProgram(0);
@@ -88,14 +112,11 @@ public:
         glBindBuffer(GL_ARRAY_BUFFER, _vpoint);
         glVertexAttribPointer(vpoint_id, 3 /*vec3*/, GL_FLOAT, DONT_NORMALIZE, ZERO_STRIDE, ZERO_BUFFER_OFFSET);
 
-        ///--- Vertex Attribute ID for Normals
-        GLint vnormal_id = glGetAttribLocation(_pid, "vnormal");
-        glEnableVertexAttribArray(vnormal_id);
-        glBindBuffer(GL_ARRAY_BUFFER, _vnormal);
-        glVertexAttribPointer(vnormal_id, 3 /*vec3*/, GL_FLOAT, DONT_NORMALIZE, ZERO_STRIDE, ZERO_BUFFER_OFFSET);
-
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, _tex);
+        glBindTexture(GL_TEXTURE_2D, _height_tex);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, _diffuse_tex);
 
         ///--- Set the MVP to vshader
         glUniformMatrix4fv(glGetUniformLocation(_pid, "MODEL"), 1, GL_FALSE, Model.data());
