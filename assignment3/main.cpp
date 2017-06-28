@@ -12,9 +12,10 @@ Mesh grid;
 typedef Eigen::Transform<float,3,Eigen::Affine> Transform;
 int window_width = 1280;
 int window_height = 1024;
+int pxwidth, pxheight;
 
 void display() {
-    glViewport(0,0,window_width,window_height);
+    glViewport(0,0,pxwidth,pxheight);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     float ratio = window_width / (float) window_height;
@@ -42,6 +43,7 @@ int main(int, char**) {
 
     OpenGP::glfwInitWindowSize(window_width, window_height);
     OpenGP::glfwMakeWindow("Assignment 3");
+    glfwGetFramebufferSize(window, &pxwidth, &pxheight);
 
     glClearColor(0.0,0.0,0.0,0.0);
     glEnable(GL_DEPTH_TEST);
